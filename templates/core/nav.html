@@ -1,0 +1,13 @@
+<div class="ui tabular menu">
+    {% for site in sites %}
+        {% if site == current_site %}
+            <a class="item active" href="{% url site.name 'all' %}">
+                {{ site.name }}
+            </a>
+        {% else %}
+            <a class="item" href="{% url site.name 'all' %}">
+                {{ site.name }}
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
