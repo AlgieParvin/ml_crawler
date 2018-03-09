@@ -4,7 +4,11 @@ from dateutil.parser import parse
 class CheckTimeMixin(object):
     @staticmethod
     def posted_after(timestamp, last_timestamp):
+        if not last_timestamp:
+            return True
         tm = parse(timestamp)
+        print('Tm:', tm)
+        print('last_timestamp:', last_timestamp)
         return last_timestamp < tm
 
     @staticmethod

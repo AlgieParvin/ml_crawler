@@ -17,8 +17,8 @@ class MachineLearningMasterySpider(scrapy.Spider, CheckTimeMixin):
 
     def parse(self, response):
         for article in response.css('article.post'):
-            title = article.css('h2.entry-title a::text').extract_first(),
-            link = article.css('h2.entry-title a::attr(href)').extract_first(),
+            title = article.css('h2.entry-title a::text').extract_first()
+            link = article.css('h2.entry-title a::attr(href)').extract_first()
             timestamp = article.css('abbr.date::attr(title)').extract_first()
             if not title or not link or not timestamp:
                 yield
