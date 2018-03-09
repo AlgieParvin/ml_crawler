@@ -1,11 +1,11 @@
 <div class="ui text menu">
     {% for p in periods %}
         {% if p == period %}
-            <a class="active item" href="{% url current_site.name p %}">
+            <a class="active item" href="{% url current_site.name p 1 %}">
                 {{ p }}
             </a>
         {% else %}
-            <a class="item" href="{% url current_site.name p %}">
+            <a class="item" href="{% url current_site.name p 1 %}">
                 {{ p }}
             </a>
         {% endif %}
