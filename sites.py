@@ -13,6 +13,8 @@ from core.models import Site
 sites = (
     ('reddit', 'reddit.com'),
     ('Machine Learning Mastery', 'machinelearningmastery.com'),
+    ('Machine Learning Weekly', 'mlweekly.com/'),
+    ('Mit News', 'news.mit.edu/topic/machine-learning'),
 )
 
 for site in sites:

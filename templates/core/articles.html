@@ -6,6 +6,7 @@
     <title>ML Crawler</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
     <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
 </head>
 <body>
     {% include 'core/nav.html' %}
@@ -17,7 +18,7 @@
         {% for article in articles %}
         <div class="item">
             <div class="content large text">
-                <a class="header" href="{{ article.link }}">{{ article.title }}</a>
+                <a class="header" href="#" onclick="window.open('{{ article.link }}')">{{ article.title }}</a>
                 <div class="description">{{ article.timestamp }}</div>
             </div>
         </div>

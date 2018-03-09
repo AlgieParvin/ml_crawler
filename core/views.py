@@ -20,6 +20,14 @@ def reddit(request, period=PERIODS[0], page=1):
     return get_articles(request, 'reddit', period, page)
 
 
+def machine_learning_weekly(request, period=PERIODS[0], page=1):
+    return get_articles(request, 'Machine Learning Weekly', period, page)
+
+
+def mit(request, period=PERIODS[0], page=1):
+    return get_articles(request, 'Mit News', period, page)
+
+
 def load_articles(site_name, period):
     if period == 'today':
         today = datetime.today().date()
