@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 
+from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import render
-from django.core.paginator import Paginator
 
 from core.models import Article, Site
-
+from .sites import REDDIT, MIT_NEWS, ML_MASTERY, ML_WEEKLY
 
 PERIODS = ['all', 'today', 'yesterday', 'week', 'month']
 ARTICLES_PER_PAGE = 20
@@ -13,19 +13,19 @@ PAGES_TO_DISPLAY = 10
 
 
 def machine_learning_mastery(request, period=PERIODS[0], page=1):
-    return get_articles(request, 'Machine Learning Mastery', period, page)
+    return get_articles(request, ML_MASTERY, period, page)
 
 
 def reddit(request, period=PERIODS[0], page=1):
-    return get_articles(request, 'reddit', period, page)
+    return get_articles(request, REDDIT, period, page)
 
 
 def machine_learning_weekly(request, period=PERIODS[0], page=1):
-    return get_articles(request, 'Machine Learning Weekly', period, page)
+    return get_articles(request, ML_WEEKLY, period, page)
 
 
 def mit(request, period=PERIODS[0], page=1):
-    return get_articles(request, 'Mit News', period, page)
+    return get_articles(request, MIT_NEWS, period, page)
 
 
 def load_articles(site_name, period):
@@ -79,6 +79,7 @@ def get_articles(request, site_name, period, page):
     context = {'articles': articles,
                'sites': sites,
                'current_site': current_site,
+               'articles_count': len(articles),
 
                'periods': PERIODS,
                'period': period,

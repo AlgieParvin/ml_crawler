@@ -1,13 +1,7 @@
 from django.urls import path, re_path
 
-from core import views
-
-
-REDDIT = 'reddit'
-ML_MASTERY = 'Machine Learning Mastery'
-ML_WEEKLY = 'Machine Learning Weekly'
-MIT_NEWS = 'Mit News'
-
+from . import views
+from .sites import REDDIT, ML_MASTERY, ML_WEEKLY, MIT_NEWS
 
 urlpatterns = [
     path('', views.reddit),

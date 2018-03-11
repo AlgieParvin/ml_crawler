@@ -1,24 +1,25 @@
 from datetime import datetime, timedelta
+
 from django.http import HttpRequest
 from django.test import TestCase
 
 import core.views as views
-from core.models import Site, Article
+from .models import Site, Article
+from .sites import sites_info
 
 
 class ArticlesPeriodTestCase(TestCase):
     def setUp(self):
-        reddit = Site(name='reddit', url='reddit.com')
-        reddit.save()
-        ml_mastery = Site(name='Machine Learning Mastery', url='machinelearningmastery.com')
-        ml_mastery.save()
+        sites = [Site(**site) for site in sites_info]
+        for site in sites:
+            site.save()
 
         data = (
-            ('Reddit 1', 'https://www.reddit.com', 0, reddit),
-            ('Reddit 2', 'https://www.reddit.com', 1, reddit),
-            ('Reddit 3', 'https://www.reddit.com', 8, reddit),
-            ('ML Mastery 1', 'https://machinelearningmastery.com', 1, ml_mastery),
-            ('ML Mastery 2', 'https://machinelearningmastery.com', 3, ml_mastery),
+            ('Reddit 1', 'https://www.reddit.com', 0, sites[0]),
+            ('Reddit 2', 'https://www.reddit.com', 1, sites[0]),
+            ('Reddit 3', 'https://www.reddit.com', 8, sites[0]),
+            ('ML Mastery 1', 'https://machinelearningmastery.com', 1, sites[1]),
+            ('ML Mastery 2', 'https://machinelearningmastery.com', 3, sites[1]),
         )
         for instance in data:
             timestamp = datetime.now() - timedelta(days=instance[2])

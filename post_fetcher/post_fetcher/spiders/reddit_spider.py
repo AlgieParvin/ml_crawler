@@ -1,6 +1,7 @@
 import scrapy
 
 from core.models import Article, Site
+from core.sites import REDDIT
 from ..items import ArticleItem
 from .utils import CheckTimeMixin
 
@@ -8,17 +9,10 @@ from .utils import CheckTimeMixin
 class RedditSpider(scrapy.Spider, CheckTimeMixin):
 
     name = 'reddit'
-    start_urls = [
-        'https://www.reddit.com/r/MachineLearning/new/'
-    ]
-    site = Site.objects.get(name='reddit')
+    site = Site.objects.get(name=REDDIT)
+    start_urls = [site.url_to_crawl]
     last_timestamp = Article.objects.filter(site=site).order_by('-timestamp')[0].timestamp \
         if Article.objects.filter(site=site) else None
-
-    def get_link(self, link):
-        if link.startswith('/r/'):
-            return 'https://www.reddit.com' + link
-        return link
 
     def parse(self, response):
         for post in response.css('div.link'):
@@ -28,11 +22,8 @@ class RedditSpider(scrapy.Spider, CheckTimeMixin):
             if not title or not link or not timestamp:
                 yield
 
-            link = self.get_link(link)
-            if not RedditSpider.last_timestamp:
-                yield ArticleItem(title=title, link=link, timestamp=timestamp,
+            full_link = RedditSpider.site.get_full_link(link)
+            if self.posted_after(timestamp, RedditSpider.last_timestamp):
+                yield ArticleItem(title=title, link=full_link, timestamp=timestamp,
                                   site=RedditSpider.site)
-            else:
-                if self.posted_after(timestamp, RedditSpider.last_timestamp):
-                    yield ArticleItem(title=title, link=link, timestamp=timestamp,
-                                      site=RedditSpider.site)
+

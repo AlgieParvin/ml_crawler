@@ -1,6 +1,7 @@
 import scrapy
 
 from core.models import Article, Site
+from core.sites import ML_WEEKLY
 from .utils import CheckTimeMixin
 from ..items import ArticleItem
 
@@ -8,10 +9,8 @@ from ..items import ArticleItem
 class MachineLearningWeeklySpider(scrapy.Spider, CheckTimeMixin):
 
     name = 'machine_learning_weekly'
-    start_urls = [
-        'http://mlweekly.com/'
-    ]
-    site = Site.objects.get(name='Machine Learning Weekly')
+    site = Site.objects.get(name=ML_WEEKLY)
+    start_urls = [site.url_to_crawl]
     last_timestamp = Article.objects.filter(site=site).order_by('-timestamp')[0].timestamp \
         if Article.objects.filter(site=site) else None
 

@@ -7,8 +7,6 @@ class CheckTimeMixin(object):
         if not last_timestamp:
             return True
         tm = parse(timestamp)
-        print('Tm:', tm)
-        print('last_timestamp:', last_timestamp)
         return last_timestamp < tm
 
     @staticmethod

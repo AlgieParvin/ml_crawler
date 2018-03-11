@@ -4,8 +4,8 @@ from core.models import Article, Site
 
 @admin.register(Site)
 class SiteAdmin(admin.ModelAdmin):
-    readonly_fields = ('name', 'url')
-    list_display = ('name', 'url')
+    readonly_fields = ('name', 'main_url')
+    list_display = ('name', 'main_url')
 
     def has_add_permission(self, request):
         return False
