@@ -8,7 +8,6 @@
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-import django
 
 BOT_NAME = 'post_fetcher'
 
@@ -94,7 +93,7 @@ import os
 import sys
 import django
 
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".."))
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "../../../../../..//"))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'ml_crawler.settings'
 
 django.setup()
