@@ -153,3 +153,5 @@ fabric.properties
 
 # Sonarlint plugin
 .idea/sonarlint
+
+development_settings.py

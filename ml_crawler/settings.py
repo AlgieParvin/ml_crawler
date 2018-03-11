@@ -78,9 +78,10 @@ WSGI_APPLICATION = 'ml_crawler.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/etc/mysql/my.cnf',
-        },
+        'NAME': 'ExoticButters$ml_crawler_db',
+        'USER': 'ExoticButters',
+        'PASSWORD': 'password1234',
+        'HOST': 'ExoticButters.mysql.pythonanywhere-services.com',
     }
 }
 
@@ -122,3 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
