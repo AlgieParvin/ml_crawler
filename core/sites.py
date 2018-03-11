@@ -1,13 +1,6 @@
-import os
-import sys
-
-import django
 from django.db.utils import IntegrityError
 
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "../../../"))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'ml_crawler.settings'
-
-django.setup()
+from .django_setup import *
 
 from core.models import Site
 
