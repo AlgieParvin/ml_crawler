@@ -31,13 +31,16 @@ sites_info = (
     },
 )
 
-for site in sites_info:
-    try:
-        Site(**site).save()
-    except IntegrityError:
-        pass
 
 REDDIT = sites_info[0]['name']
 ML_MASTERY = sites_info[1]['name']
 ML_WEEKLY = sites_info[2]['name']
 MIT_NEWS = sites_info[3]['name']
+
+
+if __name__ == '__main__':
+    for site in sites_info:
+        try:
+            Site(**site).save()
+        except IntegrityError:
+            pass
