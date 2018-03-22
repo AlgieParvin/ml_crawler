@@ -1,5 +1,14 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group, User
+
 from core.models import Article, Site
+
+
+admin.site.site_header = 'MLCrawler Administration'
+admin.site.site_title = 'MLCrawler'
+
+admin.site.unregister(Group)
+admin.site.unregister(User)
 
 
 @admin.register(Site)

@@ -1,6 +1,9 @@
+import os
+import django
 from django.db.utils import IntegrityError
 
-from .django_setup import *
+os.environ['DJANGO_SETTINGS_MODULE'] = 'ml_crawler.settings'
+django.setup()
 
 from core.models import Site
 
@@ -36,6 +39,8 @@ REDDIT = sites_info[0]['name']
 ML_MASTERY = sites_info[1]['name']
 ML_WEEKLY = sites_info[2]['name']
 MIT_NEWS = sites_info[3]['name']
+
+PERIODS = ['all', 'today', 'yesterday', 'week', 'month']
 
 
 if __name__ == '__main__':

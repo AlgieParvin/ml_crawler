@@ -1,13 +1,14 @@
 from datetime import datetime, timedelta
+import time
 
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import render
 
 from core.models import Article, Site
-from .sites import REDDIT, MIT_NEWS, ML_MASTERY, ML_WEEKLY
+from core.utils import get_time_counters
+from .sites import REDDIT, MIT_NEWS, ML_MASTERY, ML_WEEKLY, PERIODS
 
-PERIODS = ['all', 'today', 'yesterday', 'week', 'month']
 ARTICLES_PER_PAGE = 20
 PAGES_TO_DISPLAY = 10
 
@@ -60,6 +61,7 @@ def load_articles(site_name, period):
 
 def get_articles(request, site_name, period, page):
 
+    timestamp = time.time()
     # add try / catch
     page_index = int(page)
 
@@ -72,16 +74,23 @@ def get_articles(request, site_name, period, page):
     end_page = min(start_page + PAGES_TO_DISPLAY - 1, paginator.num_pages)
 
     pages = list(range(start_page, end_page + 1))
+    print('Pagination ready in', time.time() - timestamp, 'sec')
 
+    timestamp = time.time()
     sites = Site.objects.all()
     current_site = Site.objects.get(name=site_name)
+    print('Sites are ready in', time.time() - timestamp, 'sec')
+
+    timestamp = time.time()
+    articles_counter = get_time_counters(site_name)
+    print('Counters are ready in', time.time() - timestamp, 'sec')
 
     context = {'articles': articles,
                'sites': sites,
                'current_site': current_site,
                'articles_count': len(articles),
 
-               'periods': PERIODS,
+               'periods': articles_counter,
                'period': period,
 
                'page': page_index,
@@ -92,4 +101,8 @@ def get_articles(request, site_name, period, page):
                'has_previous_pages': start_page != 1,
                'has_next_pages': end_page < paginator.num_pages,
                'no_pagination': paginator.num_pages == 1}
-    return render(request, 'core/articles.html', context)
+
+    timestamp = time.time()
+    rendered_page = render(request, 'core/articles.html', context)
+    print('Rendering page in', time.time() - timestamp, 'sec')
+    return rendered_page
