@@ -1,14 +1,15 @@
 from datetime import datetime, timedelta
+import time
 
-from django.http import HttpRequest
-from django.test import TestCase
+from selenium import webdriver
 
-import core.views as views
+from django.test import LiveServerTestCase
+
 from .models import Site, Article
 from .sites import sites_info
 
 
-class ArticlesPeriodTestCase(TestCase):
+class ArticlesPeriodTestCase(LiveServerTestCase):
     def setUp(self):
         sites = [Site(**site) for site in sites_info]
         for site in sites:
@@ -26,30 +27,51 @@ class ArticlesPeriodTestCase(TestCase):
             Article(title=instance[0], link=instance[1], timestamp=timestamp, site=instance[3])\
                 .save()
 
+        self.webdriver = webdriver.Firefox()
+
     def test_reddit_today(self):
         """Reddit articles for today really have only today's articles."""
-        response = views.reddit(HttpRequest(), 'today')
-        html = response.content.decode('utf8')
-        self.assertIn('<a class="header" href="https://www.reddit.com">Reddit 1</a>', html)
-        self.assertNotIn('<a class="header" href="https://www.reddit.com">Reddit 2</a>', html)
-        self.assertNotIn('<a class="header" href="https://www.reddit.com">Reddit 3</a>', html)
+        self.webdriver.get(self.live_server_url + '/reddit/today')
+        page = self.webdriver.page_source
+        time.sleep(5)
+        self.assertIn(
+            '<a class="header" href="#" onclick="window.open(\'https://www.reddit.com\')">Reddit 1</a>', page)
         self.assertNotIn(
-            '<a class="header" href="https://machinelearningmastery.com">ML Mastery 1</a>', html)
+            '<a class="header" href="#" onclick="window.open(\'https://www.reddit.com\')">Reddit 2</a>', page)
+        self.assertNotIn(
+            '<a class="header" href="#" onclick="window.open(\'https://www.reddit.com\')">Reddit 3</a>', page)
+        self.assertNotIn(
+            '<a class="header" href"#" onclick="window.open(\'https://machinelearningmastery.com\')">ML Mastery 1</a>',
+            page)
 
     def test_reddit_yesterday(self):
         """Reddit articles for yesterday really have only yesterday's articles."""
-        response = views.reddit(HttpRequest(), 'yesterday')
-        html = response.content.decode('utf8')
-        self.assertNotIn('<a class="header" href="https://www.reddit.com">Reddit 1</a>', html)
-        self.assertIn('<a class="header" href="https://www.reddit.com">Reddit 2</a>', html)
-        self.assertNotIn('<a class="header" href="https://www.reddit.com">Reddit 3</a>', html)
+        self.webdriver.get(self.live_server_url + '/reddit/yesterday')
+        page = self.webdriver.page_source
+        time.sleep(5)
         self.assertNotIn(
-            '<a class="header" href="https://machinelearningmastery.com">ML Mastery 1</a>', html)
+            '<a class="header" href="#" onclick="window.open(\'https://www.reddit.com\')">Reddit 1</a>', page)
+        self.assertIn(
+            '<a class="header" href="#" onclick="window.open(\'https://www.reddit.com\')">Reddit 2</a>', page)
+        self.assertNotIn(
+            '<a class="header" href="#" onclick="window.open(\'https://www.reddit.com\')">Reddit 3</a>', page)
+        self.assertNotIn(
+            '<a class="header" href"#" onclick="window.open(\'https://machinelearningmastery.com\')">ML Mastery 1</a>',
+            page)
 
     def test_ml_mastery_today(self):
         """machinelearningmastery.com articles for today really have only today's articles."""
-        response = views.reddit(HttpRequest(), 'today')
-        html = response.content.decode('utf8')
-        self.assertNotIn('<a class="header" href="https://machinelearningmastery.com">ML Mastery 1</a>', html)
-        self.assertNotIn('<a class="header" href="https://machinelearningmastery.com">ML Mastery 2</a>', html)
-        self.assertNotIn('<a class="header" href="https://www.reddit.com">Reddit 3</a>', html)
+        self.webdriver.get(self.live_server_url + '/ml_mastery/today')
+        page = self.webdriver.page_source
+        time.sleep(5)
+        self.assertNotIn(
+            '<a class="header" href="#" onclick="window.open(\'https://machinelearningmastery.com\'>ML Mastery 1</a>',
+            page)
+        self.assertNotIn(
+            '<a class="header" href="#" onclick="window.open(\'https://machinelearningmastery.com\'>ML Mastery 2</a>',
+            page)
+        self.assertNotIn(
+            '<a class="header" href="#" onclick="window.open(\'https://www.reddit.com\'>Reddit 3</a>', page)
+
+    def tearDown(self):
+        self.webdriver.quit()

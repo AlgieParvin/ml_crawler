@@ -19,11 +19,15 @@ class RedditSpider(scrapy.Spider, CheckTimeMixin):
             title = post.css('a.title.may-blank::text').extract_first()
             link = post.css('a.title.may-blank::attr(href)').extract_first()
             timestamp = post.css('time.live-timestamp::attr(datetime)').extract_first()
-            if not title or not link or not timestamp:
-                yield
+            if not link:
+                link = post.css('a.title.may-blank::attr(data-outbound-url)').extract_first()
 
             full_link = RedditSpider.site.get_full_link(link)
             if self.posted_after(timestamp, RedditSpider.last_timestamp):
                 yield ArticleItem(title=title, link=full_link, timestamp=timestamp,
                                   site=RedditSpider.site)
-
+            else:
+                return
+        if self.last_timestamp:
+            next_page = response.css('span.next-button a::attr(href)').extract_first()
+            yield scrapy.Request(url=next_page, callback=self.parse)

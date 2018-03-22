@@ -13,6 +13,8 @@ class Site(models.Model):
     def get_full_link(self, link):
         if link.startswith('/'):
             return self.domain + link
+        else:
+            return link
 
 
 class Article(models.Model):
