@@ -154,4 +154,6 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
-development_settings.py
+
+django_dir.py
+

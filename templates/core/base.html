@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}">
     <link rel="icon" href="{% static 'img/favicon.ico' %}">
 
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -16,30 +15,12 @@
 </head>
 <body>
     {% include 'core/nav_bts.html' %}
-{#    <div class="content-wrapper">#}
     {% include 'core/periods_bts.html' %}
+    {% include 'core/articles_bts.html' %}
 
-    <div class="ui relaxed divided list">
-        {% if articles %}
-        {% for article in articles %}
-        <div class="item">
-            <div class="content large text">
-                <a class="header" href="#" onclick="window.open('{{ article.link }}')">{{ article.title }}</a>
-                <div class="description">{{ article.timestamp }}</div>
-            </div>
-        </div>
-        {% endfor %}
-        {% else %}
-            <p>No articles found for '{{ period }}'</p>
-            <div class="ui divider"></div>
-        {% endif %}
-    </div>
-
-    {% if not no_pagination %}
-        {% include 'core/pagination.html' %}
+    {% if many_pages %}
+        {% include 'core/pagination_bts.html' %}
     {% endif %}
-
-{#    </div>#}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
 

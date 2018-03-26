@@ -1,6 +1,8 @@
 import csv
 
-from core.django_setup import *
+from core.django_setup import django_setup
+django_setup()
+
 from core.models import Article, Site
 from core.sites import ML_MASTERY, ML_WEEKLY, REDDIT, MIT_NEWS
 
@@ -20,4 +22,4 @@ def load_to_db_from_csv(file):
 
 
 if __name__ == '__main__':
-    load_to_db_from_csv('articles.csv')
+    load_to_db_from_csv('core.csv')

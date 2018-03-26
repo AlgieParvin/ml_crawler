@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-dark indigo">
+    <div class="container">
+        <a class="navbar-brand" href="#">ML Crawler</a>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sitesNav" aria-controls="basicExampleNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="sitesNav">
+            <ul class="navbar-nav mr-auto">
+                {% for site in sites %}
+                    {% if site == current_site %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url site.name 'all' 1 %}">
+                                {{ site.name }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url site.name 'all' 1 %}">
+                                {{ site.name }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>

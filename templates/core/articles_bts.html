@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="ui relaxed divided list">
+        {% if articles %}
+            {% for article in articles %}
+                <div class="item">
+                    <div class="content large text">
+                        <a class="header" href="#" onclick="window.open('{{ article.link }}')">{{ article.title }}</a>
+                        <div class="description">{{ article.timestamp }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No articles found for '{{ period }}'</p>
+            <div class="ui divider"></div>
+        {% endif %}
+    </div>
+</div>

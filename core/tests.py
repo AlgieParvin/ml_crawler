@@ -30,7 +30,7 @@ class ArticlesPeriodTestCase(LiveServerTestCase):
         self.webdriver = webdriver.Firefox()
 
     def test_reddit_today(self):
-        """Reddit articles for today really have only today's articles."""
+        """Reddit core for today really have only today's core."""
         self.webdriver.get(self.live_server_url + '/reddit/today')
         page = self.webdriver.page_source
         time.sleep(5)
@@ -45,7 +45,7 @@ class ArticlesPeriodTestCase(LiveServerTestCase):
             page)
 
     def test_reddit_yesterday(self):
-        """Reddit articles for yesterday really have only yesterday's articles."""
+        """Reddit core for yesterday really have only yesterday's core."""
         self.webdriver.get(self.live_server_url + '/reddit/yesterday')
         page = self.webdriver.page_source
         time.sleep(5)
@@ -60,7 +60,7 @@ class ArticlesPeriodTestCase(LiveServerTestCase):
             page)
 
     def test_ml_mastery_today(self):
-        """machinelearningmastery.com articles for today really have only today's articles."""
+        """machinelearningmastery.com core for today really have only today's core."""
         self.webdriver.get(self.live_server_url + '/ml_mastery/today')
         page = self.webdriver.page_source
         time.sleep(5)

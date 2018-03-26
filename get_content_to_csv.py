@@ -4,8 +4,9 @@ from lxml import html
 from dateutil.parser import parse
 
 from core.sites import ML_MASTERY, ML_WEEKLY, MIT_NEWS
-from core.django_setup import *
 
+from core.django_setup import django_setup
+django_setup()
 
 from core.models import Site
 
@@ -90,5 +91,5 @@ if __name__ == '__main__':
         get_mit_news(page, articles, mit_news)
     print('news.mit.edu/topic/machine-learning is done')
 
-    save_to_csv(articles, 'articles.csv')
+    save_to_csv(articles, 'core.csv')
     print('Saved')
