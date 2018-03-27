@@ -14,13 +14,13 @@
                 {% for site in sites %}
                     {% if site == current_site %}
                         <li class="nav-item active">
-                            <a class="nav-link" href="{% url site.name 'all' 1 %}">
+                            <a class="nav-link" href="{% url 'site' site.slug %}">
                                 {{ site.name }}
                             </a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url site.name 'all' 1 %}">
+                            <a class="nav-link" href="{% url 'site' site.slug %}">
                                 {{ site.name }}
                             </a>
                         </li>

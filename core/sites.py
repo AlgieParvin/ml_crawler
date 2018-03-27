@@ -1,36 +1,35 @@
-import os
-import django
 from django.db.utils import IntegrityError
 
 from .django_setup import django_setup
-django_setup()
-
-from core.models import Site
 
 sites_info = (
     {
         'name': 'reddit',
         'main_url': 'reddit.com',
         'url_to_crawl': 'https://www.reddit.com/r/MachineLearning/new/',
-        'domain': 'https://www.reddit.com'
+        'domain': 'https://www.reddit.com',
+        'slug': 'reddit',
     },
     {
         'name': 'Machine Learning Mastery',
         'main_url': 'machinelearningmastery.com',
         'url_to_crawl': 'https://machinelearningmastery.com/blog',
-        'domain': ''
+        'domain': '',
+        'slug': 'machine-learning-mastery',
     },
     {
         'name': 'Machine Learning Weekly',
         'main_url': 'mlweekly.com',
         'url_to_crawl': 'http://mlweekly.com/',
-        'domain': ''
+        'domain': '',
+        'slug': 'machine-learning-weekly',
     },
     {
         'name': 'MIT News',
         'main_url': 'http://news.mit.edu/topic/machine-learning/',
         'url_to_crawl': 'http://news.mit.edu/topic/machine-learning/',
-        'domain': 'http://news.mit.edu'
+        'domain': 'http://news.mit.edu',
+        'slug': 'mit-news',
     },
 )
 
@@ -44,6 +43,9 @@ PERIODS = ['all', 'today', 'yesterday', 'week', 'month']
 ALL, TODAY, YESTERDAY, WEEK, MONTH = PERIODS
 
 if __name__ == '__main__':
+    django_setup()
+    from core.models import Site
+
     for site in sites_info:
         try:
             Site(**site).save()

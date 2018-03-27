@@ -3,14 +3,16 @@
         {% for p in periods %}
             {% if p.0 == period %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url current_site.name p.0 1 %}">
+                    <a class="nav-link active" href="{% url 'period' current_site.slug p.0 %}">
                         <strong>{{ p.0 }}</strong>
+                        <span class="badge badge-primary">{{ p.1 }}</span>
                     </a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url current_site.name p.0 1 %}">
+                    <a class="nav-link" href="{% url 'period' current_site.slug p.0 %}">
                         {{ p.0 }}
+                        <span class="badge badge-primary">{{ p.1 }}</span>
                     </a>
                 </li>
             {% endif %}

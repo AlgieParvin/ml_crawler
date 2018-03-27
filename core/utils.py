@@ -4,7 +4,11 @@ from core.sites import PERIODS
 from core.models import Article
 
 
-def get_time_counters(site_name):
+def articles_counters_for_periods(site_name):
+    """
+    Returns the quantity of articles for each time period,
+    e. g. {'ALL': 93, 'TODAY': 2, 'YESTERDAY': 14, 'WEEK': 23, 'MONTH': 54}
+    """
     today = datetime.today().date()
     today = datetime(year=today.year, month=today.month, day=today.day)
     today_count = Article.objects.filter(site__name=site_name, timestamp__gte=today).count()

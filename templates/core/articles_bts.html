@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container mb-4">
     <div class="ui relaxed divided list">
-        {% if articles %}
-            {% for article in articles %}
+        {% if object_list %}
+            {% for article in object_list %}
                 <div class="item">
                     <div class="content large text">
                         <a class="header" href="#" onclick="window.open('{{ article.link }}')">{{ article.title }}</a>
