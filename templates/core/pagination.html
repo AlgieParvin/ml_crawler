@@ -33,7 +33,7 @@
 
     {% if has_next_pages %}
       <li class="page-item">
-        <a class="page-link" href="{% url 'page' current_site.slug period previous_page_to_scroll %}">
+        <a class="page-link" href="{% url 'page' current_site.slug period next_page_to_scroll %}">
             &raquo;
         </a>
       </li>
