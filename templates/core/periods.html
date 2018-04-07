@@ -1,15 +1,21 @@
-<div class="ui text menu">
-    {% for p in periods %}
-        {% if p.0 == period %}
-            <a style="margin-right: 40px; " class="active item" href="{% url current_site.name p.0 1 %}">
-                <strong>{{ p.0 }}</strong>
-                <div class="ui teal label">{{ p.1 }}</div>
-            </a>
-        {% else %}
-            <a style="margin-right: 40px;" class="item" href="{% url current_site.name p.0 1 %}">
-                {{ p.0 }}
-                <div class="ui teal label">{{ p.1 }}</div>
-            </a>
-        {% endif %}
-    {% endfor %}
+<div class="container-fluid my-3">
+    <ul class="nav nav-tabs">
+        {% for p in periods %}
+            {% if p.0 == period %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'period' current_site.slug p.0 %}">
+                        <strong>{{ p.0 }}</strong>
+                        <span class="badge badge-primary">{{ p.1 }}</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'period' current_site.slug p.0 %}">
+                        {{ p.0 }}
+                        <span class="badge badge-primary">{{ p.1 }}</span>
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
 </div>

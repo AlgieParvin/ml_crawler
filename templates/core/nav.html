@@ -1,13 +1,28 @@
-<div class="ui tabular menu">
-    {% for site in sites %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">ML Crawler</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" style="">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      {% for site in sites %}
         {% if site == current_site %}
-            <a class="item active" href="{% url site.name 'all' 1 %}">
-                {{ site.name }}
+          <li class="nav-item active">
+              <a class="nav-link" href="{% url 'site' site.slug %}"><u>{{ site.name }}</u>
+                <span class="sr-only">(current)</span>
             </a>
+          </li>
         {% else %}
-            <a class="item" href="{% url site.name 'all' 1 %}">
-                {{ site.name }}
-            </a>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'site' site.slug %}">{{ site.name }}</a>
+          </li>
         {% endif %}
-    {% endfor %}
-</div>
+      {% endfor %}
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" placeholder="Search" type="text">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>

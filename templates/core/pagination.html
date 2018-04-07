@@ -1,22 +1,49 @@
-{% if has_previous_pages %}
-    <a href="{% url current_site.name period previous_page_to_scroll %}">
-        <i class="chevron left icon"></i>
-    </a>
-{% endif %}
+<div class="container-fluid mb-4">
+  <ul class="pagination">
 
-<div class="ui pagination menu">
+    {% if has_previous_pages %}
+      <li class="page-item">
+        <a class="page-link" href="{% url 'page' current_site.slug period previous_page_to_scroll %}">
+            &laquo;
+        </a>
+      </li>
+    {% else %}
+       <li class="page-item disabled">
+        <a class="page-link" href="#">
+            &laquo;
+        </a>
+      </li>
+    {% endif %}
+
     {% for page_index in pages %}
-        {% if page_index == page %}
-            <a class="item" style="color: #1e70bf"
-                  href="{% url current_site.name period page_index %}">{{ page_index }}</a>
+        {% if page_index == current_page %}
+            <li class="page-item active">
+                <a class="page-link" href="{% url 'page' current_site.slug period page_index %}">
+                    {{ page_index }}
+                </a>
+            </li>
         {% else %}
-            <a class="item" href="{% url current_site.name period page_index %}">{{ page_index }}</a>
+            <li class="page-item">
+                <a class="page-link" href="{% url 'page' current_site.slug period page_index %}">
+                    {{ page_index }}
+                </a>
+            </li>
         {% endif %}
     {% endfor %}
-</div>
 
-{% if has_next_pages %}
-    <a href="{% url current_site.name period next_page_to_scroll %}">
-        <i class="chevron right icon"></i>
-    </a>
-{% endif %}
+    {% if has_next_pages %}
+      <li class="page-item">
+        <a class="page-link" href="{% url 'page' current_site.slug period previous_page_to_scroll %}">
+            &raquo;
+        </a>
+      </li>
+    {% else %}
+       <li class="page-item disabled">
+        <a class="page-link" href="#">
+            &raquo;
+        </a>
+      </li>
+    {% endif %}
+
+  </ul>
+</div>

@@ -1,51 +1,17 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ML Crawler</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}">
-    <link rel="icon" href="{% static 'img/favicon.ico' %}">
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css">
-</head>
-<body>
-    {% include 'core/nav_bts.html' %}
-{#    <div class="content-wrapper">#}
-    {% include 'core/periods_bts.html' %}
-
-    <div class="ui relaxed divided list">
-        {% if articles %}
-        {% for article in articles %}
-        <div class="item">
-            <div class="content large text">
-                <a class="header" href="#" onclick="window.open('{{ article.link }}')">{{ article.title }}</a>
-                <div class="description">{{ article.timestamp }}</div>
+<div class="container-fluid mb-4">
+  {% if object_list %}
+    <div class="list-group">
+      {% for article in object_list %}
+          <a href="#" onclick="window.open('{{ article.link }}')"
+             class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ article.title }}</h5>
             </div>
-        </div>
-        {% endfor %}
-        {% else %}
-            <p>No articles found for '{{ period }}'</p>
-            <div class="ui divider"></div>
-        {% endif %}
+              <p class="mb-1">{{ article.timestamp }}</p>
+          </a>
+      {% endfor %}
     </div>
-
-    {% if not no_pagination %}
-        {% include 'core/pagination.html' %}
-    {% endif %}
-
-{#    </div>#}
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
-</body>
-</html>
+  {% else %}
+      <p class="mb-0">No articles found for '{{ period }}'</p>
+  {% endif %}
+</div>
